@@ -393,7 +393,7 @@ run(function()
 		for _, v in playersService:GetPlayers() do
 			if self:get(v) ~= 0 then return true end
 		end
-		return false
+		return true
 	end
 
 	function whitelist:tag(plr, text, rich)
