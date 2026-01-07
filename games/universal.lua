@@ -409,7 +409,7 @@ run(function()
 		if arg == 'default' and self.localprio == 0 then return true end
 		if arg == 'private' and self.localprio == 1 then return true end
 		if arg and lplr.Name:lower():sub(1, arg:len()) == arg:lower() then return true end
-		return false
+		return true
 	end
 
 	local olduninject
