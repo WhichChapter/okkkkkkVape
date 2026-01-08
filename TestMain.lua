@@ -86,7 +86,7 @@ local function finishLoading()
 end
 
 if not isfile('newvape/profiles/gui.txt') then
-	writefile('newvape/profiles/gui.txt', 'rise')
+	writefile('newvape/profiles/gui.txt', 'mobile')
 end
 local gui = readfile('newvape/profiles/gui.txt')
 
