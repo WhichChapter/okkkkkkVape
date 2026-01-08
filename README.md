@@ -6,12 +6,12 @@
   </picture>
 </p>
 <h2 align="center">
-  A Roblox script built from the ground up for your precise needs!
+  A Roblox script forked from the amazing Vape!
   <br/>
-  Rise up to the top while remaining completely untouchable.
+  Rise up to the top while remaining completely touchable.
 </h2>
 
-## Contacts
+## Contacts - 7GrandDadPGN
 [Discord](https://discord.gg/5gJqhQmrdS)
 <br/>
 [Youtube](https://youtube.com/c/7GrandDadVape)
