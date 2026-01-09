@@ -3,6 +3,51 @@ local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
+-- guis/mobile.lua
+
+-- ======= downloadFile function (your GitHub loader system) =======
+local function downloadFile(path, func)
+    if not isfile(path) then
+        local suc, res = pcall(function()
+            return game:HttpGet(
+                'https://raw.githubusercontent.com/WhichChapter/okkkkkkVape/' ..
+                readfile('newvape/profiles/commit.txt') .. '/' ..
+                select(1, path:gsub('newvape/', '')),
+                true
+            )
+        end)
+        if not suc or res == '404: Not Found' then
+            error(res)
+        end
+        if path:find('.lua') then
+            res = '--This watermark is used to delete the file if its cached, remove it to make the file persist after vape updates.\n' .. res
+        end
+        writefile(path, res)
+    end
+    return (func or readfile)(path)
+end
+
+-- ======= Ensure universal.lua is downloaded =======
+downloadFile('newvape/Modules/universal.lua')
+
+-- ======= Require the module after it exists locally =======
+local Universal = require('newvape/Modules/universal.lua')
+
+-- ======= GUI Button Setup =======
+local ESPButton = script:WaitForChild("ESPButton")  -- adjust to your button
+
+local function onESPButtonClick()
+    Universal:Toggle("ESP")  -- flip ESP toggle
+
+    -- Update button text
+    if Universal:IsEnabled("ESP") then
+        ESPButton.Text = "ESP: ON"
+    else
+        ESPButton.Text = "ESP: OFF"
+    end
+end
+
+ESPButton.MouseButton1Click:Connect(onESPButtonClick)
 
 local player = Players.LocalPlayer
 
