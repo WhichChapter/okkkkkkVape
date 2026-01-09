@@ -230,6 +230,53 @@ MainAPI:CreateModule("Combat", "KillAura", function(v)
 	print("KillAura:", v)
 end)
 
+--// ESP VISUALS
+local ESPFolder = Instance.new("Folder")
+ESPFolder.Name = "ESPFolder"
+ESPFolder.Parent = game:GetService("CoreGui") -- put in CoreGui so it displays on mobile
+
+-- Function to create a BillboardGui for a player
+local function createESP(player)
+	if ESPFolder:FindFirstChild(player.Name) then return end
+
+	local billboard = Instance.new("BillboardGui")
+	billboard.Name = player.Name
+	billboard.Adornee = player.Character and player.Character:FindFirstChild("Head")
+	billboard.Size = UDim2.new(0,100,0,50)
+	billboard.StudsOffset = Vector3.new(0,2,0)
+	billboard.AlwaysOnTop = true
+	billboard.Parent = ESPFolder
+
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.new(1,0,1,0)
+	label.BackgroundTransparency = 1
+	label.TextColor3 = Color3.fromRGB(255,0,0)
+	label.TextStrokeTransparency = 0
+	label.TextScaled = true
+	label.Font = Enum.Font.SourceSansBold
+	label.Text = player.Name
+	label.Parent = billboard
+end
+
+-- Remove ESP when a player leaves
+Players.PlayerRemoving:Connect(function(player)
+	local b = ESPFolder:FindFirstChild(player.Name)
+	if b then b:Destroy() end
+end)
+
+-- Main loop to update ESP visibility and create ESP for each player
+RunService.RenderStepped:Connect(function()
+	for _, plr in pairs(Players:GetPlayers()) do
+		if plr ~= player and plr.Character and plr.Character:FindFirstChild("Head") then
+			if Universal:IsEnabled("ESP") then
+				createESP(plr)
+			else
+				local b = ESPFolder:FindFirstChild(plr.Name)
+				if b then b:Destroy() end
+			end
+		end
+	end
+end)
 --// ADD ESP BUTTON
 MainAPI:CreateModule("Render", "ESP", function(v)
 	Universal:Toggle("ESP")
